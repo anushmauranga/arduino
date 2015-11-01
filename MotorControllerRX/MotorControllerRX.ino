@@ -9,8 +9,6 @@ const int relay_pin = 12;
 const int baudRate = 1000;
 const int TankHeight = 75;
 String mode = "OFF";
-float PreSensorValue =  0;
-bool flgFirst = 0;
 unsigned long previousMillis=0;
 float previousLevel=0;
 bool isFault=0;
@@ -45,44 +43,8 @@ void loop()
      }
      
      DecodeRFData(inArray, inDataSeq);
- 
-     if(!flgFirst)
-     {
-      PreSensorValue = inArray[0];
-      flgFirst = 1;
-      //Serial.print("Init Pre. Sesnse Value: ");
-      //Serial.println(PreSensorValue);
-     }
- 
-     if((abs(PreSensorValue - inArray[0]) > 1))
-     {
-        //Serial.println("************Logic***********");
-        //Serial.print("abs(PreSensorValue - inArray[0]) > 1): ");
-        //Serial.println(abs(PreSensorValue - inArray[0]));
-
-        //Serial.print("abs(PreSensorValue - inArray[0]) < 1): ");
-        //Serial.println(abs(PreSensorValue - inArray[0]));
-        //Serial.println("********End Logic************");
-        
-        //Serial.println("***************************");
-        //Serial.print("Init Pre. Sesnse Value: ");
-        //Serial.println(PreSensorValue);
-        //Serial.print("Eror Read Value: ");
-        //Serial.println(inArray[0]);
-        inArray[0] = PreSensorValue;
-        //Serial.print("Value Correction To: ");
-        //Serial.println(PreSensorValue);
-        //Serial.println("***************************");
-     }
-     else
-     {
-      PreSensorValue = inArray[0];
+     
       value = inArray[0];
-      //Serial.print("Value Normal: ");
-      //Serial.println(PreSensorValue);
-      //Serial.print("Time mills: ");
-      //Serial.print(millis());
-     }
 
 
      if(mode == "ON")
@@ -158,6 +120,6 @@ void loop()
       }
      }
   }
-   delay(7000);
+   delay(5000);
 }
 
